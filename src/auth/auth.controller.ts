@@ -9,9 +9,10 @@ export class AuthController {
   async login(
     @Body('email') email: string,
     @Body('password') password: string,
+    @Body('admin') admin: boolean,
   ): Promise<any> {
     try {
-      const res = await this.authService.signin(email, password);
+      const res = await this.authService.signin(email, password, admin);
       return res;
     } catch (error) {
       return error;
@@ -23,7 +24,8 @@ export class AuthController {
     @Body('userName') userName: any,
     @Body('email') email: any,
     @Body('password') password: any,
+    @Body('admin') admin: any,
   ): Promise<any> {
-    return await this.authService.saveUser(userName, email, password);
+    return await this.authService.saveUser(userName, email, password, admin);
   }
 }

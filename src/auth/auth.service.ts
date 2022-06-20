@@ -15,7 +15,7 @@ export class AuthService {
   products: Auth[] = [];
   constructor(@InjectModel('Auth') private readonly authModel: Model<Auth>) {}
 
-  async signin(email: any, password: any) {
+  async signin(email: any, password: any, admin: any): Promise<any> {
     console.log('sign in');
     try {
       try {
@@ -46,7 +46,12 @@ export class AuthService {
     }
   }
 
-  async saveUser(userName: any, email: any, password: any): Promise<any> {
+  async saveUser(
+    userName: any,
+    email: any,
+    password: any,
+    admin: any,
+  ): Promise<any> {
     try {
       console.log('save admin new user', userName, email, password);
       const uniqueMail = await this.authModel.findOne({ email: email });
@@ -61,6 +66,7 @@ export class AuthService {
           userName,
           email,
           password: bcryptPass,
+          admin,
         });
 
         const result = await newAdminUser.save();

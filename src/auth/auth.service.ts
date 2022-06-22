@@ -8,6 +8,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Auth } from './auth.model';
+import * as nodemailer from 'nodemailer';
 const bcrypt = require('bcryptjs');
 
 @Injectable()

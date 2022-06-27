@@ -5,6 +5,8 @@ export const AuthSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
+  phoneNumber: { type: String, required: false },
+  age: { type: String, required: false },
 });
 
 export interface Auth {

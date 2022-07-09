@@ -22,7 +22,6 @@ export class AdminController {
   async createAdmin(
     @Res() response,
     @Body('createdAt') createdAt: Date,
-    @Body('adminId') adminId: string,
   ): Promise<any> {
     const newAdmin = await this.adminService.create(response.body);
     return response.status(HttpStatus.CREATED).json({
@@ -47,12 +46,8 @@ export class AdminController {
   }
 
   @Put('/:id')
-  async update(
-    @Res() response,
-    @Param('id') id,
-    @Body() admin: Admin,
-  ): Promise<any> {
-    const updatedAdmin = await this.adminService.update(response, id, admin);
+  async update(@Res() response, @Param('id') id): Promise<any> {
+    const updatedAdmin = await this.adminService.update(response, id);
     return response.status(HttpStatus.OK).json({
       updatedAdmin,
     });

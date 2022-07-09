@@ -4,7 +4,7 @@ export const AuthSchema = new mongoose.Schema({
   userName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  admin: { type: Boolean, default: false },
+  admin: { type: Boolean, default: false, required: false },
   phoneNumber: { type: String, required: false },
   age: { type: String, required: false },
 });

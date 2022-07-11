@@ -5,7 +5,11 @@ export const VendorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   phoneNumber: { type: String, required: true },
-  cId: { type: String, required: true },
+  cId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Admin',
+    required: false,
+  },
 });
 
 export interface Vendor {

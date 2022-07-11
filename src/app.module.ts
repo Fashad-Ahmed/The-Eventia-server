@@ -5,10 +5,10 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { PaymentModule } from './payment/payment.module';
-import config from './config/keys';
 import { EventModule } from './event/event.module';
 import { VendorModule } from './vendor/vendor.module';
 import { LocationModule } from './location/location.module';
+import config from './config/keys';
 
 @Module({
   imports: [

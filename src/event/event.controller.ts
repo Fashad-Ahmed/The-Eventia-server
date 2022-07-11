@@ -9,16 +9,17 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { response } from 'express';
 import { Date } from 'mongoose';
 import { Event } from './event.model';
 import { EventService } from './event.service';
+import { Request, response } from 'express';
+
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Post('/createEvent')
-  async createEvent(@Res() response: Response): Promise<any> {
+  async createEvent(@Res() response: Request): Promise<any> {
     const newEvent = await this.eventService.create(response.body);
     return {
       newEvent,

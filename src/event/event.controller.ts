@@ -49,4 +49,12 @@ export class EventController {
       deletedAdmin,
     });
   }
+
+  @Get('/:id')
+  async getEvent(@Res() response, @Param('id') id) {
+    const event = await this.eventService.getById(id);
+    return response.status(HttpStatus.OK).json({
+      event,
+    });
+  }
 }

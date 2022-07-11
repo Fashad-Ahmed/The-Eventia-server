@@ -83,4 +83,15 @@ export class EventService {
       throw [404, error.message];
     }
   }
+
+  async getById(id): Promise<any> {
+    console.log('id', id);
+
+    try {
+      return await this.eventModel.findById(id);
+    } catch (error) {
+      console.log(error);
+      throw [404, error.message];
+    }
+  }
 }

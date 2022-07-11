@@ -78,4 +78,16 @@ export class PaymentService {
       throw [404, error.message];
     }
   }
+
+  async getUserPayment(userId): Promise<any> {
+    console.log('userId', userId);
+
+    try {
+      const payment = await this.paymentModel.find({ userId });
+      return { ...payment, statusCode: 200 };
+    } catch (error) {
+      console.log(error);
+      throw [404, error.message];
+    }
+  }
 }

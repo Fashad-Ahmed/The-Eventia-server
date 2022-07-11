@@ -48,4 +48,12 @@ export class PaymentController {
       deletedPayment,
     });
   }
+
+  @Get('/:id')
+  async getPayment(@Res() response, @Param('id') id) {
+    const payment = await this.paymentService.getUserPayment(id);
+    return response.status(HttpStatus.OK).json({
+      payment,
+    });
+  }
 }

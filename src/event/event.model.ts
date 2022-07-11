@@ -6,9 +6,15 @@ export const EventSchema = new mongoose.Schema({
   createdAt: { type: Date, required: true },
   description: { type: String, required: false },
   category: { type: String, required: false },
+  price: { type: String, required: false },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'Auth',
+    required: false,
+  },
+  adminId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Admin',
     required: false,
   },
 });
@@ -18,5 +24,7 @@ export interface Event {
   createdAt: Date;
   description: string;
   category: string;
+  price: string;
   userId: string;
+  adminId: string;
 }

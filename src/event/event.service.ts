@@ -20,7 +20,9 @@ export class EventService {
         createdAt: Date.now(),
         description: req.description,
         category: req.category,
+        price: req.price,
         userId: req.userId,
+        adminId: req.adminId,
       });
 
       const event = await this.eventModel.create(newEvent);
@@ -56,7 +58,9 @@ export class EventService {
         createdAt: Date.now(),
         description: req.description,
         category: req.category,
+        price: req.price,
         userId: req.userId,
+        adminId: req.adminId,
       });
 
       const event = await this.eventModel.findByIdAndUpdate(id, newEvent, {

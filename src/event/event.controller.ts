@@ -35,7 +35,7 @@ export class EventController {
   }
 
   @Put('/:id')
-  async update(@Res() response, @Param('id') id): Promise<any> {
+  async update(@Res() response: Request, @Param('id') id): Promise<any> {
     const newEvent = await this.eventService.update(response, id);
     return {
       newEvent,

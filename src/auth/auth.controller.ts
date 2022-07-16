@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Delete, Param } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -27,5 +27,15 @@ export class AuthController {
     @Body('admin') admin: any,
   ): Promise<any> {
     return await this.authService.saveUser(userName, email, password, admin);
+  }
+
+  @Get('/fetchAll')
+  async fetchAll(): Promise<any> {
+    return await this.authService.fetchAll();
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id): Promise<any> {
+    return await this.authService.delete(id);
   }
 }

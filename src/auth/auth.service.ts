@@ -16,6 +16,16 @@ export class AuthService {
   products: Auth[] = [];
   constructor(@InjectModel('Auth') private readonly authModel: Model<Auth>) {}
 
+  async fetchAll(): Promise<any> {
+    try {
+      const products = await this.authModel.find();
+      return products;
+    } catch (error) {
+      console.log('error', error);
+      throw [404, 'something went wrong'];
+    }
+  }
+
   async signin(email: any, password: any, admin: any): Promise<any> {
     console.log('sign in');
     try {
@@ -76,6 +86,16 @@ export class AuthService {
       } else {
         throw new ConflictException('User already exist');
       }
+    } catch (error) {
+      console.log('error', error);
+      throw [404, 'something went wrong'];
+    }
+  }
+
+  async delete(id: any): Promise<any> {
+    try {
+      const result = await this.authModel.deleteOne({ _id: id });
+      return result;
     } catch (error) {
       console.log('error', error);
       throw [404, 'something went wrong'];

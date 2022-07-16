@@ -34,8 +34,8 @@ export class AuthController {
     return await this.authService.fetchAll();
   }
 
-  @Delete('/:id')
-  async delete(@Param('id') id): Promise<any> {
+  @Delete('/delete')
+  async delete(@Body('id') id): Promise<any> {
     return await this.authService.delete(id);
   }
 }

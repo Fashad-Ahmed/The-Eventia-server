@@ -94,6 +94,7 @@ export class AuthService {
 
   async delete(id: any): Promise<any> {
     try {
+      console.log('delete', id);
       const result = await this.authModel.deleteOne({ _id: id });
       return result;
     } catch (error) {

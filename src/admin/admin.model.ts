@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 export const AdminSchema = new mongoose.Schema({
-  createdAt: { type: Date, required: true },
+  createdAt: { type: Date, required: false },
   userName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },

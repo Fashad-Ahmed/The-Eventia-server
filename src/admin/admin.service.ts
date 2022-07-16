@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Admin } from './admin.model';
@@ -42,35 +46,69 @@ export class AdminService {
     }
   }
 
-  async create(req): Promise<any> {
-    console.log('admin create request started', req);
+  // async create(req): Promise<any> {
+  //   console.log('admin create request started', req);
 
-    const bcryptPass = bcrypt.hashSync(req.password, 8);
-    console.log('bcrypt pass', bcryptPass, Date.now());
+  //   const bcryptPass = bcrypt.hashSync(req.password, 8);
+  //   console.log('bcrypt pass', bcryptPass, Date.now());
+  //   try {
+  //     const newAdmin = await new this.adminModel({
+  //       createdAt: Date.now(),
+  //       userName: req.userName,
+  //       email: req.email,
+  //       password: bcryptPass,
+  //       adminStatus: true,
+  //       phoneNumber: req.phoneNumber,
+  //       age: req.age,
+  //     });
+
+  //     const admin = await this.adminModel.create(newAdmin);
+  //     return { ...admin, statusCode: 200 };
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw [404, error.message];
+  //   }
+  // }
+
+  async saveUser(
+    userName: any,
+    email: any,
+    password: any,
+    admin: any,
+  ): Promise<any> {
     try {
-      const newAdmin = await new this.adminModel({
-        createdAt: Date.now(),
-        userName: req.userName,
-        email: req.email,
-        password: bcryptPass,
-        adminStatus: true,
-        phoneNumber: req.phoneNumber,
-        age: req.age,
-      });
+      console.log('save admin new user', userName, email, password);
+      const uniqueMail = await this.adminModel.findOne({ email: email });
+      console.log(uniqueMail);
+      if (!uniqueMail) {
+        console.log('save admin new user', userName, email, password);
 
-      const admin = await this.adminModel.create(newAdmin);
-      return { ...admin, statusCode: 200 };
+        const bcryptPass = bcrypt.hashSync(password, 8);
+        console.log('bcrypt pass', bcryptPass);
+
+        const newAdminUser = new this.adminModel({
+          userName,
+          email,
+          password: bcryptPass,
+          admin,
+        });
+
+        const result = await newAdminUser.save();
+        console.log(result);
+        return result;
+      } else {
+        throw new ConflictException('User already exist');
+      }
     } catch (error) {
-      console.log(error);
-      throw [404, error.message];
+      console.log('error', error);
+      throw [404, 'something went wrong'];
     }
   }
-
   async fetchAll(): Promise<any> {
     console.log('admin get request started');
 
     try {
-      const getAdmin = await this.adminModel.find().exec();
+      const getAdmin = await this.adminModel.find();
       if (!getAdmin) {
         console.log(`no admin found!`);
       }

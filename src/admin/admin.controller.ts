@@ -18,15 +18,39 @@ import { AdminService } from './admin.service';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @Post('/createAdmin')
-  async createAdmin(
-    @Res() response,
-    @Body('createdAt') createdAt: Date,
+  // @Post('/createAdmin')
+  // async createAdmin(
+  //   @Res() response,
+  //   @Body('createdAt') createdAt: Date,
+  // ): Promise<any> {
+  //   const newAdmin = await this.adminService.create(response.body);
+  //   return response.status(HttpStatus.CREATED).json({
+  //     newAdmin,
+  //   });
+  // }
+
+  @Post('/signin')
+  async login(
+    @Body('email') email: string,
+    @Body('password') password: string,
+    @Body('admin') admin: boolean,
   ): Promise<any> {
-    const newAdmin = await this.adminService.create(response.body);
-    return response.status(HttpStatus.CREATED).json({
-      newAdmin,
-    });
+    try {
+      const res = await this.adminService.signin(email, password, admin);
+      return res;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  @Post('/signup')
+  async saveUser(
+    @Body('userName') userName: any,
+    @Body('email') email: any,
+    @Body('password') password: any,
+    @Body('admin') admin: any,
+  ): Promise<any> {
+    return await this.adminService.saveUser(userName, email, password, admin);
   }
 
   @Get('/fetchAdmin')
@@ -53,11 +77,8 @@ export class AdminController {
     });
   }
 
-  @Delete('/:id')
-  async delete(@Res() response, @Param('id') id) {
-    const deletedAdmin = await this.adminService.delete(id);
-    return response.status(HttpStatus.OK).json({
-      deletedAdmin,
-    });
+  @Delete('/delete')
+  async delete(@Body('id') id): Promise<any> {
+    return await this.adminService.delete(id);
   }
 }

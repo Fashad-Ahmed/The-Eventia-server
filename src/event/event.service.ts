@@ -12,17 +12,25 @@ export class EventService {
     @InjectModel('Auth') private readonly authModel: Model<Auth>,
   ) {}
 
-  async create(req): Promise<any> {
-    console.log('event create request started', req);
+  async create(
+    name,
+    description,
+    location,
+    price,
+    category,
+    userId,
+    adminId,
+  ): Promise<any> {
     try {
       const newEvent = await new this.eventModel({
-        name: req.name,
-        createdAt: Date.now(),
-        description: req.description,
-        category: req.category,
-        price: req.price,
-        userId: req.userId,
-        adminId: req.adminId,
+        name,
+        // createdAt: Date.now(),
+        description,
+        price,
+        category,
+        location,
+        userId,
+        adminId,
       });
 
       const event = await this.eventModel.create(newEvent);
@@ -37,7 +45,7 @@ export class EventService {
     console.log('event get request started');
 
     try {
-      const getEvent = await this.eventModel.find().exec();
+      const getEvent = await this.eventModel.find();
       if (!getEvent) {
         console.log(`no event found!`);
       }

@@ -18,8 +18,18 @@ export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
   @Post('/createPayment')
-  async createPayment(@Res() response: Request): Promise<any> {
-    const newPayment = await this.paymentService.create(response.body);
+  async createPayment(
+    @Body('amount') amount: string,
+    @Body('paymentMethod') paymentMethod: string,
+    @Body('items') items: string,
+    @Body('userId') userId: string,
+  ): Promise<any> {
+    const newPayment = await this.paymentService.create(
+      amount,
+      paymentMethod,
+      items,
+      userId,
+    );
     return {
       newPayment,
     };
@@ -41,12 +51,9 @@ export class PaymentController {
     };
   }
 
-  @Delete('/:id')
-  async delete(@Res() response, @Param('id') id) {
-    const deletedPayment = await this.paymentService.delete(id);
-    return response.status(HttpStatus.OK).json({
-      deletedPayment,
-    });
+  @Delete('/delete')
+  async delete(@Body('id') id): Promise<any> {
+    return await this.paymentService.delete(id);
   }
 
   @Get('/:id')

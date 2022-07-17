@@ -12,13 +12,13 @@ export class LocationService {
     @InjectModel('Admin') private readonly adminModel: Model<Admin>,
   ) {}
 
-  async create(req): Promise<any> {
-    console.log('location create request started', req);
+  async create(name, price, cId): Promise<any> {
+    console.log('location create request started');
     try {
       const newLocation = await new this.locationModel({
-        name: req.name,
-        price: req.price,
-        cId: req.cId,
+        name,
+        price,
+        cId,
       });
 
       const location = await this.locationModel.create(newLocation);

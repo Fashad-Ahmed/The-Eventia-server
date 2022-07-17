@@ -12,15 +12,15 @@ export class PaymentService {
     @InjectModel('Auth') private readonly authModel: Model<Auth>,
   ) {}
 
-  async create(req): Promise<any> {
-    console.log('payment create request started', req);
+  async create(amount, paymentMethod, items, userId): Promise<any> {
+    console.log('payment create request started');
     try {
       const newPayment = await new this.paymentModel({
         createdAt: Date.now(),
-        amount: req.amount,
-        paymentMethod: req.paymentMethod,
-        items: req.items,
-        userId: req.userId,
+        amount,
+        paymentMethod,
+        items,
+        userId,
       });
 
       const payment = await this.paymentModel.create(newPayment);

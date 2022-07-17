@@ -19,8 +19,18 @@ export class VendorController {
   constructor(private readonly vendorService: VendorService) {}
 
   @Post('/createVendor')
-  async createVendor(@Res() response: Request): Promise<any> {
-    const newVendor = await this.vendorService.create(response.body);
+  async createVendor(
+    @Body('name') name: string,
+    @Body('description') description: string,
+    @Body('phoneNumber') phoneNumber: string,
+    @Body('cId') cId: string,
+  ): Promise<any> {
+    const newVendor = await this.vendorService.create(
+      name,
+      description,
+      phoneNumber,
+      cId,
+    );
     return {
       newVendor,
     };
@@ -42,11 +52,8 @@ export class VendorController {
     };
   }
 
-  @Delete('/:id')
-  async delete(@Res() response, @Param('id') id) {
-    const deletedVendor = await this.vendorService.delete(id);
-    return response.status(HttpStatus.OK).json({
-      deletedVendor,
-    });
+  @Delete('/delete')
+  async delete(@Body('id') id): Promise<any> {
+    return await this.vendorService.delete(id);
   }
 }

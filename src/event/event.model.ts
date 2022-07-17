@@ -3,13 +3,12 @@ const Schema = mongoose.Schema;
 
 export const EventSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  createdAt: { type: Date, required: true },
+  createdAt: { type: Date, required: false },
   description: { type: String, required: false },
   category: { type: String, required: false },
   price: { type: String, required: false },
   userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Auth',
+    type: String,
     required: false,
   },
   adminId: {

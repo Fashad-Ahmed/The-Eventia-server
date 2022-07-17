@@ -12,14 +12,14 @@ export class VendorService {
     @InjectModel('Admin') private readonly adminModel: Model<Admin>,
   ) {}
 
-  async create(req): Promise<any> {
-    console.log('vendor create request started', req);
+  async create(name, description, phoneNumber, cId): Promise<any> {
+    console.log('vendor create request started');
     try {
       const newVendor = await new this.vendorModel({
-        name: req.name,
-        description: req.description,
-        phoneNumber: req.phoneNumber,
-        cId: req.cId,
+        name,
+        description,
+        phoneNumber,
+        cId,
       });
 
       const vendor = await this.vendorModel.create(newVendor);

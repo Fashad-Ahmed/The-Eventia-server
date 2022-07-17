@@ -17,8 +17,12 @@ export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
   @Post('/createLocation')
-  async createLocation(@Res() response: Request): Promise<any> {
-    const newLocation = await this.locationService.create(response.body);
+  async createLocation(
+    @Body('name') name: string,
+    @Body('price') price: string,
+    @Body('cId') cId: string,
+  ): Promise<any> {
+    const newLocation = await this.locationService.create(name, price, cId);
     return {
       newLocation,
     };
@@ -40,11 +44,8 @@ export class LocationController {
     };
   }
 
-  @Delete('/:id')
-  async delete(@Res() response, @Param('id') id) {
-    const deletedLocation = await this.locationService.delete(id);
-    return response.status(HttpStatus.OK).json({
-      deletedLocation,
-    });
+  @Delete('/delete')
+  async delete(@Body('id') id): Promise<any> {
+    return await this.locationService.delete(id);
   }
 }

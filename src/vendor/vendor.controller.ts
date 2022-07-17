@@ -37,11 +37,8 @@ export class VendorController {
   }
 
   @Get('/fetchVendor')
-  async fetchVendor(@Res() response): Promise<any> {
-    const vendors = await this.vendorService.fetchAll();
-    return {
-      vendors,
-    };
+  async fetchVendor(): Promise<any> {
+    return await this.vendorService.fetchAll();
   }
 
   @Put('/:id')

@@ -31,13 +31,8 @@ export class VendorService {
   }
 
   async fetchAll(): Promise<any> {
-    console.log('vendor get request started');
-
     try {
       const getVendor = await this.vendorModel.find();
-      if (!getVendor) {
-        console.log(`no vendor found!`);
-      }
       return getVendor;
     } catch (error) {
       console.log(error);

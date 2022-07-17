@@ -30,13 +30,8 @@ export class LocationService {
   }
 
   async fetchAll(): Promise<any> {
-    console.log('location get request started');
-
     try {
-      const getLocation = await this.locationModel.find().exec();
-      if (!getLocation) {
-        console.log(`no location found!`);
-      }
+      const getLocation = await this.locationModel.find();
       return getLocation;
     } catch (error) {
       console.log(error);

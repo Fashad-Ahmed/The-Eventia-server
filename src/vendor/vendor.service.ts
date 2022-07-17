@@ -34,7 +34,7 @@ export class VendorService {
     console.log('vendor get request started');
 
     try {
-      const getVendor = await this.vendorModel.find().exec();
+      const getVendor = await this.vendorModel.find();
       if (!getVendor) {
         console.log(`no vendor found!`);
       }

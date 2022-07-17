@@ -41,7 +41,7 @@ export class EventController {
   }
 
   @Get('/fetchEvent')
-  async fetchEvent(@Res() response): Promise<any> {
+  async fetchEvent(): Promise<any> {
     return await this.eventService.fetchAll();
   }
 

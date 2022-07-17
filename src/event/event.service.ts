@@ -42,13 +42,8 @@ export class EventService {
   }
 
   async fetchAll(): Promise<any> {
-    console.log('event get request started');
-
     try {
       const getEvent = await this.eventModel.find();
-      if (!getEvent) {
-        console.log(`no event found!`);
-      }
       return getEvent;
     } catch (error) {
       console.log(error);

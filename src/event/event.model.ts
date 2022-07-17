@@ -12,8 +12,7 @@ export const EventSchema = new mongoose.Schema({
     required: false,
   },
   adminId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Admin',
+    type: String,
     required: false,
   },
 });

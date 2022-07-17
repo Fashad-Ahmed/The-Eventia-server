@@ -36,11 +36,8 @@ export class PaymentController {
   }
 
   @Get('/fetchPayment')
-  async fetchPayment(@Res() response): Promise<any> {
-    const payments = await this.paymentService.fetchAll();
-    return {
-      payments,
-    };
+  async fetchPayment(): Promise<any> {
+    return await this.paymentService.fetchAll();
   }
 
   @Put('/:id')

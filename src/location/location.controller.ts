@@ -29,11 +29,8 @@ export class LocationController {
   }
 
   @Get('/fetchLocation')
-  async fetchLocation(@Res() response): Promise<any> {
-    const locations = await this.locationService.fetchAll();
-    return {
-      locations,
-    };
+  async fetchLocation(): Promise<any> {
+    return await this.locationService.fetchAll();
   }
 
   @Put('/:id')

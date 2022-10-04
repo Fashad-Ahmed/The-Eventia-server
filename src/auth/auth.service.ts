@@ -8,7 +8,6 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Auth } from './auth.model';
-import * as nodemailer from 'nodemailer';
 const bcrypt = require('bcryptjs');
 
 @Injectable()
@@ -27,33 +26,28 @@ export class AuthService {
   }
 
   async signin(email: any, password: any, admin: any): Promise<any> {
-    console.log('sign in');
     try {
-      try {
-        const userExist = await this.authModel.findOne({ email: email });
-        if (!userExist) {
-          throw new NotFoundException('User does not exist');
-        }
-
-        console.log(bcrypt.compareSync(password, userExist.password));
-        console.log(!bcrypt.compareSync(password, userExist.password));
-
-        if (!bcrypt.compareSync(password, userExist.password)) {
-          console.log('Wrong password');
-          throw new NotFoundException('Wrong Password');
-        }
-
-        const user = {
-          userExist,
-        };
-        console.log(user);
-        return { ...user, statusCode: 200 };
-      } catch (error) {
-        throw [404, error.message];
+      console.log('signin', email, password, admin);
+      const user = await this.authModel.findOne({ email: email });
+      console.log('user', user);
+      if (!user) {
+        throw new NotFoundException('User not found');
       }
+      const passwordIsValid = bcrypt.compareSync(password, user.password);
+      console.log('passwordIsValid', passwordIsValid);
+      if (!passwordIsValid) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: 'Invalid Password!',
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      return !passwordIsValid ? HttpStatus.BAD_REQUEST : user;
     } catch (error) {
-      console.log(error);
-      throw [404, error.message];
+      console.log('error', error);
+      throw [404, 'something went wrong'];
     }
   }
 
